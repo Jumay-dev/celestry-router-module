@@ -1,4 +1,4 @@
-function s = distributionController(r, n, Vesi, Grafsp, Rv, p)
+function s = distributionController(r, n, queue, Grafsp, Rv, p)
     sp = zeros(2, r / 2);
     %-----------------------------------------------
     xp = uniformDistribution(r);
@@ -26,8 +26,7 @@ function s = distributionController(r, n, Vesi, Grafsp, Rv, p)
 
                 if (l <= Rv)
                     visible(1, c) = k;
-                    visible(2, c) = l; %var1
-                    % visible(2,c) = Vesi(k); %var2
+                    visible(2, c) = queue(k);
                     leng(1, c) = l;
                     c = c + 1;
                 end
@@ -52,13 +51,13 @@ function s = distributionController(r, n, Vesi, Grafsp, Rv, p)
                     min(1, 3) = leng(g);
                 end
                 
-                % if (visible(2,g)==min(1,2))
-                %    if (leng(g)<min(1,3))
-                %        min(1,1) = visible(1,g);
-                %        min(1,2) = visible(2,g);
-                %        min(1,3) = leng(g);
-                %    end
-                % end
+                if (visible(2,g)==min(1,2))
+                   if (leng(g)<min(1,3))
+                       min(1,1) = visible(1,g);
+                       min(1,2) = visible(2,g);
+                       min(1,3) = leng(g);
+                   end
+                end
             end
 
         end
