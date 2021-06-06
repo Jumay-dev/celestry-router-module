@@ -1,8 +1,6 @@
 function s = distributionController(r, n, queue, Grafsp, Rv, p)
     sp = zeros(2, r / 2);
-    %-----------------------------------------------
-    xp = uniformDistribution(r);
-    % xp = populationDistribution(r);
+    xp = populationDistribution(r);
     dost = zeros(1, n);
     q = 1;
     f = 1;
@@ -12,8 +10,7 @@ function s = distributionController(r, n, queue, Grafsp, Rv, p)
     while z <= r
         visible = zeros(2, 1);
         leng = zeros(1, 1);
-        %ind=true;
-        %while ind
+
         c = 1;
 
         for k = 1:n
@@ -35,7 +32,6 @@ function s = distributionController(r, n, queue, Grafsp, Rv, p)
 
         end
 
-        %min = zeros(1,2);
         min = zeros(1, 3);
         min(1, 1) = visible(1, 1);
         min(1, 2) = visible(2, 1);
