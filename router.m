@@ -2,7 +2,6 @@ function f = router(sattelitesCount, contab, queue, Tstart, Tfinish)
     mins = zeros(1, sattelitesCount); 
     minRouteWeight = zeros(1, sattelitesCount);
     wave = zeros(1, sattelitesCount); 
-    queue = ones(1,sattelitesCount);
     minRouteWeight(Tstart) = queue(Tstart);
     indic = false; c = 1; indic2 = false;
 
