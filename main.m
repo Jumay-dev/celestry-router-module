@@ -135,7 +135,7 @@ for kl = 1:sred
     minRouteWeight = ones(1, sattelitesCount); %graph vertex weights array
     next = ones(1, sattelitesCount); % next empty points in queue
     send = zeros(1, sattelitesCount); % last package for sending array
-    sputsys = zeros(sattelitesCount, localTacts * sattelitesCount, sattelitesCount); % main 3D array of sattelite system
+    queueArr = zeros(sattelitesCount, localTacts * sattelitesCount, sattelitesCount); % main 3D array of sattelite system
     antenna = zeros(1, antennaCount); %antennas array
     usredp = zeros(1, localTacts);
     sredpack = zeros(1, localTacts);
@@ -151,7 +151,7 @@ for kl = 1:sred
             routerInstance = router(sattelitesCount, contab, minRouteWeight, s(1, i), s(2, i));
 
             for j = 2:length(routerInstance)
-                sputsys(routerInstance(1, 1), next(routerInstance(1, 1)), j - 1) = routerInstance(1, j);
+                queueArr(routerInstance(1, 1), next(routerInstance(1, 1)), j - 1) = routerInstance(1, j);
             end
 
             next(routerInstance(1, 1)) = next(routerInstance(1, 1)) + 1;
@@ -198,7 +198,7 @@ for kl = 1:sred
                 routerInstance = router(sattelitesCount, contab, minRouteWeight, s(1, i), s(2, i));
 
                 for j = 2:length(routerInstance)
-                    sputsys(routerInstance(1, 1), next(routerInstance(1, 1)), j - 1) = routerInstance(1, j);
+                    queueArr(routerInstance(1, 1), next(routerInstance(1, 1)), j - 1) = routerInstance(1, j);
                 end
 
                 next(routerInstance(1, 1)) = next(routerInstance(1, 1)) + 1;
@@ -218,7 +218,7 @@ for kl = 1:sred
                 t = 1; antenna = zeros(1, antennaCount); an = 0; isNotEmpty = true;
 
                 while isNotEmpty
-                    g = sputsys(z, t, 1);
+                    g = queueArr(z, t, 1);
                     an = 0; in = true;
 
                     while ((an < antennaCount) && (in))
@@ -231,18 +231,18 @@ for kl = 1:sred
                     end
 
                     if (antenna(an) == 0)
-                        gg = sputsys(z, t, 1);
-                        sputsys(z, t, 1) = 0;
+                        gg = queueArr(z, t, 1);
+                        queueArr(z, t, 1) = 0;
                         ind2 = true; j = 2;
 
-                        if (sputsys(z, t, 2) == 0)
+                        if (queueArr(z, t, 2) == 0)
                             ds(gg) = ds(gg) + 1;
                             ind2 = false;
                             minRouteWeight(z) = minRouteWeight(z) - 1;
                             send(z) = send(z) - 1;
                         end
 
-                        if (sputsys(z, t, 2) ~= 0)
+                        if (queueArr(z, t, 2) ~= 0)
                             next(g) = next(g) + 1;
                             send(z) = send(z) - 1;
                             minRouteWeight(g) = minRouteWeight(g) + 1;
@@ -250,11 +250,11 @@ for kl = 1:sred
                         end
 
                         while ind2 % package sending
-                            sputsys(g, next(g) - 1, j - 1) = sputsys(z, t, j);
-                            sputsys(z, t, j) = 0;
+                            queueArr(g, next(g) - 1, j - 1) = queueArr(z, t, j);
+                            queueArr(z, t, j) = 0;
                             j = j + 1;
 
-                            if ((sputsys(z, t, j) == 0) || (j > 2 * sattelitesCount))
+                            if ((queueArr(z, t, j) == 0) || (j > 2 * sattelitesCount))
                                 ind2 = false;
                             end
 
@@ -275,7 +275,7 @@ for kl = 1:sred
 
                     t = t + 1;
 
-                    if sputsys(z, t, 1) == 0
+                    if queueArr(z, t, 1) == 0
                         isNotEmpty = false;
                     end
 
@@ -293,7 +293,7 @@ for kl = 1:sred
                 isNotEmpty = false;
             end
 
-            if (minRouteWeight(z) == 2) && (sputsys(z, 1, 1) ~= 0) % queue dont need sorting
+            if (minRouteWeight(z) == 2) && (queueArr(z, 1, 1) ~= 0) % queue dont need sorting
                 isNotEmpty = false;
             end
 
@@ -301,21 +301,21 @@ for kl = 1:sred
 
             while isNotEmpty % sorting process
 
-                if (sputsys(z, t, 1) == 0) && (t < (next(z) - 1))
+                if (queueArr(z, t, 1) == 0) && (t < (next(z) - 1))
                     ind3 = true; x = t;
 
                     while ind3
 
-                        if sputsys(z, x + 1, 1) ~= 0
+                        if queueArr(z, x + 1, 1) ~= 0
                             ind2 = true; j = 1;
 
                             while ind2
-                                c = sputsys(z, t, j);
-                                sputsys(z, t, j) = sputsys(z, x + 1, j);
-                                sputsys(z, x + 1, j) = c;
+                                c = queueArr(z, t, j);
+                                queueArr(z, t, j) = queueArr(z, x + 1, j);
+                                queueArr(z, x + 1, j) = c;
                                 j = j + 1;
 
-                                if ((sputsys(z, x + 1, j) == 0) || (j == sattelitesCount))
+                                if ((queueArr(z, x + 1, j) == 0) || (j == sattelitesCount))
                                     ind2 = false;
                                 end
 
@@ -348,7 +348,7 @@ for kl = 1:sred
 
             while isNotEmpty
 
-                if (sputsys(i, t, 1) == 0)
+                if (queueArr(i, t, 1) == 0)
                     isNotEmpty = false;
                 end
 
