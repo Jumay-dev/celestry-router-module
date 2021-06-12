@@ -124,11 +124,11 @@ for m = 1:sattelitesCount
 end
 
 modelTact = 200; % imitation beats count
-packagesFromEarthByTact = 40;
+packagesFromEarthByTact = 100;
 pksk = zeros(1, modelTact);
 ppk = zeros(1, modelTact);
 p = 4000000;
-sred = 100;
+sred = 200;
 
 for kl = 1:sred
     localTacts = modelTact;
