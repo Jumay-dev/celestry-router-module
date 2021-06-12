@@ -46,14 +46,17 @@ function s = distributionController(r, n, queue, Grafsp, Rv, p)
                     min(1, 2) = visible(2, g);
                     min(1, 3) = leng(g);
                 end
-                
-                if (visible(2,g)==min(1,2))
-                   if (leng(g)<min(1,3))
-                       min(1,1) = visible(1,g);
-                       min(1,2) = visible(2,g);
-                       min(1,3) = leng(g);
-                   end
+
+                if (visible(2, g) == min(1, 2))
+
+                    if (leng(g) < min(1, 3))
+                        min(1, 1) = visible(1, g);
+                        min(1, 2) = visible(2, g);
+                        min(1, 3) = leng(g);
+                    end
+
                 end
+
             end
 
         end
@@ -75,7 +78,7 @@ function s = distributionController(r, n, queue, Grafsp, Rv, p)
         i = i + 1;
 
         if i == r + 1
-            xp = ravnrspred(r);
+            xp = populationDistribution(r);
             i = 1;
         end
 
