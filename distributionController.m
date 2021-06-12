@@ -80,7 +80,7 @@ function s = distributionController(r, n, Vesi, Grafsp, Rv, p)
         i = i + 1;
 
         if i == r + 1
-            xp = ravnrspred(r);
+            xp = uniformDistribution(r);
             i = 1;
         end
 

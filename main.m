@@ -124,11 +124,11 @@ for m = 1:sattelitesCount
 end
 
 modelTact = 200; % imitation beats count
-packagesFromEarthByTact = 46;
+packagesFromEarthByTact = 40;
 pksk = zeros(1, modelTact);
 ppk = zeros(1, modelTact);
 p = 4000000;
-sred = 200;
+sred = 100;
 
 for kl = 1:sred
     localTacts = modelTact;
@@ -372,8 +372,8 @@ for kl = 1:localTacts
     ppk(kl) = ((ppk(kl) / sred));
 end
 
-ed = ppk(localTacts) %pksk(localTacts)
-eed = ed / packagesFromEarthByTact %spack(localTacts)
+packagesOut = ppk(localTacts) %pksk(localTacts)
+packagesOutToIn = packagesOut / packagesFromEarthByTact %spack(localTacts)
 figure(2)
 plot(ppk)
 title('Усредненное')
