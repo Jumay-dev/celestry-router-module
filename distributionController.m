@@ -1,8 +1,8 @@
 function s = distributionController(r, n, Vesi, Grafsp, Rv, p)
     sp = zeros(2, r / 2);
     %-----------------------------------------------
-    xp = uniformDistribution(r);
-    % xp = populationDistribution(r);
+    % xp = uniformDistribution(r);
+    xp = populationDistribution(r);
     dost = zeros(1, n);
     q = 1;
     f = 1;
@@ -80,7 +80,7 @@ function s = distributionController(r, n, Vesi, Grafsp, Rv, p)
         i = i + 1;
 
         if i == r + 1
-            xp = uniformDistribution(r);
+            xp = populationDistribution(r);
             i = 1;
         end
 
