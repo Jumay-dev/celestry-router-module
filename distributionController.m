@@ -26,8 +26,8 @@ function s = distributionController(r, n, Vesi, Grafsp, Rv, p)
 
                 if (l <= Rv)
                     visible(1, c) = k;
-                    visible(2, c) = l; %var1
-                    % visible(2,c) = Vesi(k); %var2
+                    % visible(2, c) = l; %var1
+                    visible(2,c) = Vesi(k); %var2
                     leng(1, c) = l;
                     c = c + 1;
                 end
